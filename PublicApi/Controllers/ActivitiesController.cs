@@ -1,5 +1,6 @@
 using API.Controllers.Base;
 using Application.Activities;
+using Ardalis.GuardClauses;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,7 +27,7 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditActivity(Guid id, Activity activity) 
+        public async Task<IActionResult> EditActivity(Guid id, Activity activity)
         {
             activity.Id = id;
             

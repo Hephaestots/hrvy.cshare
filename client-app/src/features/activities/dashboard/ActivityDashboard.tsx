@@ -25,7 +25,7 @@ export default observer(function ActivityDashboard() {
                 <ActivityList />
             </Grid.Column>
             <Grid.Column width='6'>
-                <h2>Activity Filter</h2>
+                <h2>Activity filters</h2>
             </Grid.Column>
         </Grid>
     )
