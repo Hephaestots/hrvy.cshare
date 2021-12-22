@@ -1,26 +1,14 @@
 import { observer } from 'mobx-react-lite';
-import React, { SyntheticEvent, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Icon, Item, Label, Segment } from 'semantic-ui-react';
 import { Activity } from '../../../app/models/Activity';
-import { useStore } from '../../../app/stores/store';
 
 interface Props {
     activity: Activity
 }
 
 export default observer(function ActivityListItem({activity}: Props) {
-
-    const { activityStore } = useStore();
-    const { loading, deleteActivity } = activityStore;
-
-    const [target, setTarget] = useState('');
-
-    function handleActivityDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
-        setTarget(e.currentTarget.name);
-        deleteActivity(id);
-    }
-
     return (
         <Segment.Group>
             <Segment>
@@ -41,9 +29,9 @@ export default observer(function ActivityListItem({activity}: Props) {
             </Segment>
             <Segment>
                 <span>
-                    <Icon name='clock' key={activity.id} /> {activity.date}
+                    <Icon name='clock' /> {activity.date}
                     <p />
-                    <Icon name='marker' key={activity.id} /> {activity.venue}
+                    <Icon name='marker' /> {activity.venue}
                 </span>
             </Segment>
             <Segment secondary clearing>

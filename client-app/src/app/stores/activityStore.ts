@@ -23,7 +23,7 @@ export default class ActivityStore {
                 const date = activity.date;
                 activities[date] = activities[date] ? [...activities[date], activity] : [activity];
                 return activities;
-            }, {} as { [key: string]: Activity[]})
+            }, {} as {[key: string]: Activity[]})
         )
     }
 

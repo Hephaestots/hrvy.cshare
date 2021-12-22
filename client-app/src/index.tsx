@@ -7,6 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import { store, StoreContext } from './app/stores/store';
 
 import 'semantic-ui-css/semantic.css';
+import 'react-calendar/dist/Calendar.css';
 import './app/layout/styles.css';
 
 ReactDOM.render(

@@ -14,16 +14,21 @@ function App() {
 
     return (
         <Fragment>
-            {location.pathname !== "/" && <NavBar />}
-            <Container style={{marginTop: '7em'}}>
-                <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/activities" element={<ActivityDashboard />} />
-                    <Route path="/activities/:id" element={<ActivityDetails />} />
-                    <Route path="/createActivity" element={<ActivityForm />} />
-                    <Route path="/manage/:id" element={<ActivityForm />} />
-                </Routes>
-            </Container>
+            {location.pathname !== "/" &&
+                <Fragment>
+                    <NavBar />
+                    <Container style={{ marginTop: '7em' }}>
+                        <Routes>
+                            <Route path="/activities" element={<ActivityDashboard />} />
+                            <Route path="/activities/:id" element={<ActivityDetails />} />
+                            <Route path="/createActivity" element={<ActivityForm />} />
+                            <Route path="/manage/:id" element={<ActivityForm />} />
+                        </Routes>
+                    </Container>
+                </Fragment>}
+            <Routes>
+                <Route path="/" element={<HomePage />} />
+            </Routes>
         </Fragment>
     );
 }
