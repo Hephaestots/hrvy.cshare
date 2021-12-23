@@ -3,6 +3,7 @@ using Persistance.Data;
 
 using MediatR;
 using Application.Core;
+using Ardalis.GuardClauses;
 
 namespace Application.Activities
 {
@@ -24,9 +25,11 @@ namespace Application.Activities
 
             public async Task<Result<Activity>> Handle(Query request, CancellationToken cancellationToken)
             {
+                Guard.Against.Null(_context.Activities, nameof(_context.Activities));
+
                 var activity = await _context.Activities.FindAsync(request.Id);
 
-                return Result<Activity>.Success(activity);
+                return Result<Activity>.Success(activity!);
             }
         }
     }

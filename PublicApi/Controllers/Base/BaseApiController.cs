@@ -1,11 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+//TODO: remove.
+#nullable disable
+
 using Application.Core;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace API.Controllers.Base
 {
@@ -15,18 +13,20 @@ namespace API.Controllers.Base
     {
         private IMediator _mediator;
 
-        protected IMediator Mediator => _mediator ??= HttpContext.RequestServices
-                                                                 .GetService<IMediator>()!;
-        
+        protected IMediator Mediator => _mediator ??= 
+            HttpContext.RequestServices.GetService<IMediator>();
+
+        /// <summary>
+        /// Handling the Result<T> entity returned from the Application layer.
+        /// </summary>
+        /// <typeparam name="T">Result type value.</typeparam>
+        /// <param name="result"></param>
+        /// <returns></returns>
         protected ActionResult HandleResult<T>(Result<T> result)
         {
             if (result == null) return NotFound();
-            if (result.IsSuccess && result.Value != null)
-                return Ok(result.Value);
-
-            if (result.IsSuccess && result.Value == null)
-                return NotFound();
-
+            if (result.IsSuccess && result.Value != null) return Ok(result.Value);
+            if (result.IsSuccess && result.Value == null) return NotFound();
             return BadRequest(result.Error);
         }
     }

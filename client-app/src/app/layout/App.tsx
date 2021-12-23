@@ -8,7 +8,7 @@ function App() {
     return (
         <Fragment>
             <Routes>
-                <Route path="/" element={<HomePage />} />
+                <Route index element={<HomePage />} />
                 <Route path="/*" element={<Main />} />
             </Routes>
         </Fragment>

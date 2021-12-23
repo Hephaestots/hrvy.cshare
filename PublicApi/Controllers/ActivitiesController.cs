@@ -1,6 +1,5 @@
 using API.Controllers.Base;
 using Application.Activities;
-using Ardalis.GuardClauses;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
