@@ -13,6 +13,17 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new List.Query()));
         }
 
+        /// <summary>
+        /// Phony controller endpoint, but used the LINQ framework to filter by date.
+        /// </summary>
+        /// <param name="date">Date for activities to match and/or occur after.</param>
+        /// <returns>List of activities.</returns>
+        [HttpGet("/byDate/{date}")]
+        public async Task<IActionResult> GetActivitiesByDate(string date)
+        {
+            return HandleResult(await Mediator.Send(new ListByDate.Query { Date = date }));
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetActivity(Guid id)
         {
