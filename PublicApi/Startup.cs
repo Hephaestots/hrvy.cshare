@@ -1,13 +1,8 @@
 using Application.Activities;
-using MediatR;
-using Persistance;
-
-using Microsoft.OpenApi.Models;
-using Microsoft.EntityFrameworkCore;
-using Application.Core;
 using API.Extensions;
 using FluentValidation.AspNetCore;
 using PublicApi.Middleware;
+using PublicApi.Extensions;
 
 namespace API
 {
@@ -30,6 +25,8 @@ namespace API
                     });
 
             services.AddApplicationServices(_config);
+
+            services.AddIdentityServices(_config);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
