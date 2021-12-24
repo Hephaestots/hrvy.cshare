@@ -14,7 +14,7 @@ import TextArea from '../../../app/common/form/TextArea';
 import SelectInput from '../../../app/common/form/SelectInput';
 
 // Custom Variables.
-import { activitySchema } from '../../../app/models/validation/activityValidationSchema';
+import { activityValidationSchema } from '../../../app/models/validation/activityValidationSchema';
 import { categoryOptions } from '../../../app/common/options/categoryOptions';
 import { Activity } from '../../../app/models/Activity';
 
@@ -46,7 +46,7 @@ export default observer(function ActivityForm() {
     }, [id, loadActivity]);
 
     function handleFormSubmit(activity: Activity) {
-        if (activity.id.length === 0) {
+        if (activity.id!.length === 0) {
             let newActivity = {
                 ...activity,
                 id: uuid()
@@ -65,7 +65,7 @@ export default observer(function ActivityForm() {
                 enableReinitialize
                 initialValues={activity}
                 onSubmit={values => handleFormSubmit(values)}
-                validationSchema={activitySchema}
+                validationSchema={activityValidationSchema}
             >
                 {({ isValid, isSubmitting, dirty, handleSubmit }) => (
                     <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>

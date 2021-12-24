@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-export const activitySchema = Yup.object({
+export const activityValidationSchema = Yup.object({
     title: Yup.string().required('The activity title is required.'),
     description: Yup.string().required('The activity description is required.'),
     category: Yup.string().required(),
