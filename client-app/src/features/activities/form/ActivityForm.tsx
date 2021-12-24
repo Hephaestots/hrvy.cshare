@@ -2,14 +2,18 @@ import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Button, Header, Segment } from 'semantic-ui-react';
-import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { useStore } from '../../../app/stores/store';
 import { v4 as uuid } from 'uuid';
 import { Formik, Form } from 'formik';
+
+// Custom React components.
 import DateInput from '../../../app/common/form/DateInput';
+import LoadingComponent from '../../../app/layout/LoadingComponent';
 import TextInput from '../../../app/common/form/TextInput';
 import TextArea from '../../../app/common/form/TextArea';
 import SelectInput from '../../../app/common/form/SelectInput';
+
+// Custom Variables.
 import { activitySchema } from '../../../app/models/validation/activityValidationSchema';
 import { categoryOptions } from '../../../app/common/options/categoryOptions';
 import { Activity } from '../../../app/models/Activity';
@@ -84,7 +88,8 @@ export default observer(function ActivityForm() {
                             floated='right'
                             positive
                             type='submit'
-                            content='Submit' />
+                            content='Submit'
+                        />
                         <Button as={Link} to="/activities" floated='right' content='Cancel' />
                     </Form>           
                 )}
