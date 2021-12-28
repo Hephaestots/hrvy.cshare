@@ -18,7 +18,7 @@ export default observer(function ActivityDashboard() {
         }
     }, [loadActivities, activityRegistry.size]);
   
-    if (loadingInitial) return <LoadingComponent inverted={true} />
+    if (loadingInitial) return <LoadingComponent content='Loading activities...' inverted={true} />
     
     return (
         <Grid>

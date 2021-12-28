@@ -5,11 +5,12 @@ import ActivityDetails from '../../features/activities/details/ActivityDetails';
 import ActivityForm from '../../features/activities/form/ActivityForm';
 import ServerError from '../../features/errors/ServerError';
 import TestErrors from '../../features/errors/TestErrors';
+import LoginForm from '../../features/users/LoginForm';
 import NavBar from './NavBar';
 import { observer } from 'mobx-react-lite';
 import { Routes, Route } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 import NotFound from '../../features/errors/NotFound';
+import { ToastContainer } from 'react-toastify';
 
 export default observer(function Main() {
     return (
@@ -24,6 +25,7 @@ export default observer(function Main() {
                     <Route path="/manage/:id" element={<ActivityForm />} />
                     <Route path="/errors" element={<TestErrors />} />
                     <Route path="/server-error" element={<ServerError />} />
+                    <Route path="/login" element={<LoginForm />} />
                     <Route path="/*" element={<NotFound />} />
                 </Routes>
             </Container>
