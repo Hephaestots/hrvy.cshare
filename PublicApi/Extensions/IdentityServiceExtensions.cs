@@ -1,6 +1,11 @@
 ﻿using Domain.Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 using Persistance.Data;
+using PublicApi.Interfaces;
+using PublicApi.Services;
+using System.Text;
 
 namespace PublicApi.Extensions
 {
@@ -16,7 +21,21 @@ namespace PublicApi.Extensions
                     .AddEntityFrameworkStores<DataContext>()
                     .AddSignInManager<SignInManager<User>>();
 
-            services.AddAuthentication();
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Token:SecretKey"]));
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(options =>
+                    {
+                        options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateIssuerSigningKey = true,
+                            IssuerSigningKey = key,
+                            ValidateIssuer = false,
+                            ValidateAudience = false
+                        };
+                    });
+
+            services.AddScoped<ITokenService, TokenService>();
 
             return services;
         }
