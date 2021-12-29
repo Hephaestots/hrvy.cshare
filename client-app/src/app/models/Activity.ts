@@ -1,6 +1,6 @@
 import Profile from './profile';
 
-interface BaseActivity {
+export interface BaseActivity {
     id: string;
     title: string;
     date: Date | null;
