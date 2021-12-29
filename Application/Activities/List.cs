@@ -4,27 +4,36 @@ using Domain.Entities;
 using Persistance.Data;
 using Ardalis.GuardClauses;
 using Application.Core;
+using Application.Activities.DTOs;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 
 namespace Application.Activities
 {
     public class List
     {
-        public class Query : IRequest<Result<List<Activity>>> {}
+        public class Query : IRequest<Result<List<ActivityDto>>> {}
 
-        public class Handler : IRequestHandler<Query, Result<List<Activity>>>
+        public class Handler : IRequestHandler<Query, Result<List<ActivityDto>>>
         {
             private readonly DataContext _context;
+            private readonly IMapper _mapper;
 
-            public Handler(DataContext context)
+            public Handler(DataContext context, IMapper mapper)
             {
                 this._context = context;
+                this._mapper = mapper;
             }
 
-            public async Task<Result<List<Activity>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<ActivityDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 Guard.Against.Null(_context.Activities, nameof(_context.Activities));
 
-                return Result<List<Activity>>.Success(await _context.Activities.ToListAsync());
+                var activities = await _context.Activities
+                    .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider)
+                    .ToListAsync();
+
+                return Result<List<ActivityDto>>.Success(activities);
             }
         }
     }
