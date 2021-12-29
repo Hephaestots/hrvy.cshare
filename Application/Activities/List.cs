@@ -4,7 +4,7 @@ using Domain.Entities;
 using Persistance.Data;
 using Ardalis.GuardClauses;
 using Application.Core;
-using Application.Activities.DTOs;
+using Application.DTOs;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 

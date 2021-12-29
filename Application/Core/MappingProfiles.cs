@@ -1,6 +1,6 @@
 #nullable disable
 
-using Application.Activities.DTOs;
+using Application.DTOs;
 using AutoMapper;
 using Domain.Entities;
 

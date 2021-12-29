@@ -5,7 +5,7 @@ using MediatR;
 using Application.Core;
 using Ardalis.GuardClauses;
 using AutoMapper;
-using Application.Activities.DTOs;
+using Application.DTOs;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 

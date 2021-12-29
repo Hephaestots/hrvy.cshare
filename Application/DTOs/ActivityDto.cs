@@ -1,7 +1,7 @@
 ﻿using Application.Profiles;
 using Domain.Entities;
 
-namespace Application.Activities.DTOs
+namespace Application.DTOs
 {
     public class ActivityDto : BaseEntity<Guid>
     {
