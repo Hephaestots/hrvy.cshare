@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities
 {
-    public class ActivityAttendee : BaseEntity<Guid>
+    public class ActivityAttendee
     {
         public string? UserId { get; set; }
         public Guid? ActivityId { get; set; }

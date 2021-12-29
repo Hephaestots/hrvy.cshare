@@ -4,6 +4,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Icon, Item, Label, Segment } from 'semantic-ui-react';
 import { Activity } from '../../../app/models/Activity';
+import ActivityListItemAttendee from './ActivityListItemAttendee';
 
 interface Props {
     activity: Activity
@@ -15,7 +16,7 @@ export default observer(function ActivityListItem({activity}: Props) {
             <Segment>
                 <Item.Group>
                     <Item>
-                        <Item.Image size='tiny' circular src='assets/user.png' />
+                        <Item.Image size='tiny' circular src='/assets/user.png' />
                         <Item.Content>
                             <Item.Header as={Link} to={`/activities/${activity.id}`}>
                                 {activity.title}
@@ -35,9 +36,18 @@ export default observer(function ActivityListItem({activity}: Props) {
                     <Icon name='marker' /> {activity.venue}
                 </span>
             </Segment>
+            <Segment secondary>
+                <ActivityListItemAttendee attendees={activity.attendees!} />
+            </Segment>
             <Segment secondary clearing>
                 <span>{activity.description}</span>
-                <Button as={Link} to={`/activities/${activity.id}`} color='teal' floated='right' content='View' />
+                <Button
+                    as={Link}
+                    to={`/activities/${activity.id}`}
+                    color='teal'
+                    floated='right'
+                    content='View'
+                />
             </Segment>
         </Segment.Group>
     )
