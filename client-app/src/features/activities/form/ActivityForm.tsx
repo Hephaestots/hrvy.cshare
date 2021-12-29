@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Header, Segment } from 'semantic-ui-react';
 import { useStore } from '../../../app/stores/store';
 import { v4 as uuid } from 'uuid';
@@ -16,37 +16,28 @@ import SelectInput from '../../../app/common/form/SelectInput';
 // Custom Variables.
 import { activityValidationSchema } from '../../../app/models/validation/activityValidationSchema';
 import { categoryOptions } from '../../../app/common/options/categoryOptions';
-import { Activity } from '../../../app/models/Activity';
-
-const emptyState = {
-    id: '',
-    title: '',
-    category: '',
-    description: '',
-    date: null,
-    city: '',
-    venue: ''
-};
+import Activity, { newActivity } from '../../../app/models/activity';
+import { history } from '../../../app/layout/base/history';
 
 export default observer(function ActivityForm() {
 
     const navigate = useNavigate();
     const { activityStore } = useStore();
-    const { loading, loadingInitial, createActiviy, loadActivity, updateActivity } = activityStore;
+    const { loadingInitial, createActiviy, loadActivity, updateActivity } = activityStore;
     const { id } = useParams<{ id: string }>();
 
     /**
      * Local state for the form.
      * */
-    const [activity, setActivity] = useState<Activity>(emptyState);
+    const [activity, setActivity] = useState<Activity>(newActivity({}));
 
     useEffect(() => {
-        if (id) loadActivity(id).then(activity => setActivity(activity!))
-        else setActivity(emptyState)
+        if (id) loadActivity(id).then(activity => setActivity(newActivity(activity)))
+        else setActivity(newActivity({}))
     }, [id, loadActivity]);
 
     function handleFormSubmit(activity: Activity) {
-        if (activity.id!.length === 0) {
+        if (!activity.id) {
             let newActivity = {
                 ...activity,
                 id: uuid()
@@ -84,13 +75,18 @@ export default observer(function ActivityForm() {
                         <TextInput placeholder='Venue' name='venue' />
                         <Button
                             disabled={isSubmitting || !dirty || !isValid}
-                            loading={loading}
+                            loading={isSubmitting}
                             floated='right'
                             positive
                             type='submit'
                             content='Submit'
                         />
-                        <Button as={Link} to="/activities" floated='right' content='Cancel' />
+                        <Button
+                            onClick={() => history.back()}
+                            floated='right'
+                            type='reset'
+                            content='Cancel'
+                        />
                     </Form>           
                 )}
             </Formik>

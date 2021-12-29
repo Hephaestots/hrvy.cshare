@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Icon, Item, Label, Segment } from 'semantic-ui-react';
-import { Activity } from '../../../app/models/Activity';
+import Activity from '../../../app/models/activity';
 import ActivityListItemAttendee from './ActivityListItemAttendee';
 
 interface Props {
@@ -21,10 +21,16 @@ export default observer(function ActivityListItem({activity}: Props) {
                             <Item.Header as={Link} to={`/activities/${activity.id}`}>
                                 {activity.title}
                             </Item.Header>
-                            <Item.Description>Hosted by Bob!</Item.Description>
+                            <Item.Description>Hosted by {activity.host?.displayName}!</Item.Description>
                             <Item.Extra>
                                 <Label basic content={activity.category} />
                             </Item.Extra>
+                            {activity.isHost &&
+                                <Label basic color='orange' content='Hosting' />
+                            }
+                            {activity.isGoing && !activity.isHost && (
+                                <Label basic color='green' content='Going' />
+                            )}
                         </Item.Content>
                     </Item>
                 </Item.Group>

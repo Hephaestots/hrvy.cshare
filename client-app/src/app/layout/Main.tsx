@@ -11,10 +11,12 @@ import { observer } from 'mobx-react-lite';
 import { Routes, Route } from 'react-router-dom';
 import NotFound from '../../features/errors/NotFound';
 import { ToastContainer } from 'react-toastify';
+import ScrollToTop from '../common/hooks/ScrollToTop';
 
 export default observer(function Main() {
     return (
         <Fragment>
+            <ScrollToTop />
             <ToastContainer position='bottom-right' hideProgressBar />
             <NavBar />
             <Container style={{ marginTop: '7em' }}>

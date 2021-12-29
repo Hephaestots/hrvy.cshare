@@ -13,6 +13,7 @@
   <ItemGroup>
     <Folder Include="src\app\common\form\" />
     <Folder Include="src\app\common\modals\" />
+    <Folder Include="src\app\common\hooks\" />
     <Folder Include="src\app\common\options\" />
     <Folder Include="src\app\models\validation\" />
     <Folder Include="src\features\users\" />

@@ -1,7 +1,9 @@
-import { Activity } from './../models/Activity';
+import Activity, { baseActivity } from './../models/activity';
+import { newProfile } from './../models/profile';
 import { makeAutoObservable, runInAction } from 'mobx';
 import agent from '../api/agent';
 import { format } from 'date-fns';
+import { store } from './store';
 
 export default class ActivityStore {
     activityRegistry = new Map<string, Activity>();
@@ -37,6 +39,16 @@ export default class ActivityStore {
     }
 
     private setActivity = (activity: Activity) => {
+        const user = store.userStore.user;
+        if (user) {
+            activity.isGoing = activity.attendees!.some(
+                a => (a.username === user.username)
+            );
+            activity.isHost = (activity.hostUsername === user.username);
+            activity.host = activity.attendees?.find(a =>
+                (a.username === activity.hostUsername)
+            );
+        }
         activity.date = new Date(activity.date!);
         this.activityRegistry.set(activity.id, activity);
     }
@@ -46,19 +58,22 @@ export default class ActivityStore {
      * @param activity
      */
     createActiviy = async (activity: Activity) => {
-        this.loading = true;
+        const user = store.userStore.user;
+        const attendee = newProfile({
+            displayName: user!.displayName,
+            username: user!.username,
+            image: user!.image
+        });
         try {
             await agent.Activities.create(activity);
+            activity.hostUsername = user!.username
+            activity.attendees = [attendee];
+            this.setActivity(activity);
             runInAction(() => {
-                this.activityRegistry.set(activity.id, activity);
                 this.selectedActivity = activity;
-                this.loading = false;
             })
         } catch (error) {
             console.log(error);
-            runInAction(() => {
-                this.loading = false;
-            })
         }
     }
 
@@ -112,19 +127,24 @@ export default class ActivityStore {
      * @param activity
      */
     updateActivity = async (activity: Activity) => {
-        this.loading = true;
+        var simpleActivity = baseActivity({
+            id: activity.id,
+            category: activity.category,
+            city: activity.city,
+            date: activity.date,
+            description: activity.description,
+            title: activity.title,
+            venue: activity.venue
+        }); 
         try {
-            await agent.Activities.update(activity);
+            await agent.Activities.update(simpleActivity as Activity);
             runInAction(() => {
-                this.activityRegistry.set(activity.id, activity);
-                this.selectedActivity = activity;
-                this.loading = false;
+                let updatedActivity = { ...this.getActivity(activity.id), ...activity }
+                this.activityRegistry.set(activity.id, updatedActivity);
+                this.selectedActivity = updatedActivity;
             })
         } catch (error) {
             console.log(error);
-            runInAction(() => {
-                this.loading = false;
-            })
         }
     }
 
@@ -142,6 +162,35 @@ export default class ActivityStore {
             })
         } catch (error) {
             console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
+    }
+
+    /**
+     * Update attendance for a specific activity.
+     * */
+    updateAttendance = async () => {
+        const user = store.userStore.user;
+        this.loading = true;
+        try {
+            await agent.Activities.attend(this.selectedActivity!.id);
+            runInAction(() => {
+                if (this.selectedActivity?.isGoing) {
+                    this.selectedActivity.attendees =
+                        this.selectedActivity.attendees?.filter(a => a.username !== user?.username);
+                    this.selectedActivity.isGoing = false;
+                } else {
+                    var profile = newProfile(user!);
+                    this.selectedActivity?.attendees?.push(profile);
+                    this.selectedActivity!.isGoing = true;
+                }
+                this.activityRegistry.set(this.selectedActivity!.id, this.selectedActivity!);
+            })
+        } catch (error) {
+            console.log(error);
+        } finally {
             runInAction(() => {
                 this.loading = false;
             })
