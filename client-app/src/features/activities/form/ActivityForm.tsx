@@ -29,11 +29,11 @@ export default observer(function ActivityForm() {
     /**
      * Local state for the form.
      * */
-    const [activity, setActivity] = useState<Activity>(newActivity({}));
+    const [activity, setActivity] = useState<Activity>(newActivity(undefined));
 
     useEffect(() => {
         if (id) loadActivity(id).then(activity => setActivity(newActivity(activity)))
-        else setActivity(newActivity({}))
+        else setActivity(newActivity(undefined))
     }, [id, loadActivity]);
 
     function handleFormSubmit(activity: Activity) {

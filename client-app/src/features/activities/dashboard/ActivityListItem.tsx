@@ -14,9 +14,12 @@ export default observer(function ActivityListItem({activity}: Props) {
     return (
         <Segment.Group>
             <Segment>
+                {activity.isCancelled &&
+                    <Label attached='top' color='red' content='Cancelled' style={{ align: 'center' }} />
+                }
                 <Item.Group>
                     <Item>
-                        <Item.Image size='tiny' circular src='/assets/user.png' />
+                        <Item.Image style={{ marginBottom: 10 }} size='tiny' circular src='/assets/user.png' />
                         <Item.Content>
                             <Item.Header as={Link} to={`/activities/${activity.id}`}>
                                 {activity.title}
@@ -24,13 +27,13 @@ export default observer(function ActivityListItem({activity}: Props) {
                             <Item.Description>Hosted by {activity.host?.displayName}!</Item.Description>
                             <Item.Extra>
                                 <Label basic content={activity.category} />
+                                {activity.isHost &&
+                                    <Label basic color='orange' content='Hosting' />
+                                }
+                                {activity.isGoing && !activity.isHost && (
+                                    <Label basic color='green' content='Going' />
+                                )}
                             </Item.Extra>
-                            {activity.isHost &&
-                                <Label basic color='orange' content='Hosting' />
-                            }
-                            {activity.isGoing && !activity.isHost && (
-                                <Label basic color='green' content='Going' />
-                            )}
                         </Item.Content>
                     </Item>
                 </Item.Group>

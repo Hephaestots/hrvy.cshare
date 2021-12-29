@@ -42,6 +42,8 @@ export const newActivity = <T extends Partial<Activity>>(activity?: T): Activity
     return Object.assign(emptyActivity(), activity);
 }
 
-export const baseActivity = <T extends Partial<BaseActivity>>(values: T): BaseActivity => {
-    return Object.assign(emptyBaseActivity(), values);
+export const newBaseActivity = <T extends Partial<BaseActivity>>(activity: T): BaseActivity => {
+    let subset = (({ id, title, date, description, category, city, venue }) =>
+        ({ id, title, date, description, category, city, venue }))(activity as BaseActivity);
+    return Object.assign(emptyBaseActivity(), subset);
 }

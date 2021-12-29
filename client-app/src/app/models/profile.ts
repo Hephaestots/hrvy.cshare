@@ -8,9 +8,12 @@ export default interface Profile {
 const emptyProfile = (): Profile => ({
     displayName: '',
     username: '',
-    image: ''
+    image: '',
+    bio: ''
 });
 
-export const newProfile = <T extends Partial<Profile>>(initialValues: T): Profile & T => {
-    return Object.assign(emptyProfile(), initialValues);
+export const newProfile = <T extends Partial<Profile>>(user: T): Profile => {
+    let subset = (({ displayName, username, image }) =>
+        ({ displayName, username, image }))(user as Profile);
+    return Object.assign(emptyProfile(), subset);
 }

@@ -1,4 +1,4 @@
-import Activity, { baseActivity } from './../models/activity';
+import Activity, { newBaseActivity } from './../models/activity';
 import { newProfile } from './../models/profile';
 import { makeAutoObservable, runInAction } from 'mobx';
 import agent from '../api/agent';
@@ -53,10 +53,6 @@ export default class ActivityStore {
         this.activityRegistry.set(activity.id, activity);
     }
 
-    /**
-     * Creating a new activity to our list of activities (in db).
-     * @param activity
-     */
     createActiviy = async (activity: Activity) => {
         const user = store.userStore.user;
         const attendee = newProfile({
@@ -77,9 +73,6 @@ export default class ActivityStore {
         }
     }
 
-    /**
-     * Loading all of our activities from the db.
-     */
     loadActivities = async () => {
         this.loadingInitial = true;
         try {
@@ -96,10 +89,6 @@ export default class ActivityStore {
         }
     }
 
-    /**
-     * Loading a specific activity from the db.
-     * @param id
-     */
     loadActivity = async (id: string) => {
         let activity = this.getActivity(id);
         if (activity) {
@@ -122,55 +111,36 @@ export default class ActivityStore {
         }
     }
 
-    /**
-     * Updating a specific activity from our list of activities (in db).
-     * @param activity
-     */
     updateActivity = async (activity: Activity) => {
-        var simpleActivity = baseActivity({
-            id: activity.id,
-            category: activity.category,
-            city: activity.city,
-            date: activity.date,
-            description: activity.description,
-            title: activity.title,
-            venue: activity.venue
-        }); 
+        var simpleActivity = newBaseActivity(activity);
         try {
             await agent.Activities.update(simpleActivity as Activity);
             runInAction(() => {
                 let updatedActivity = { ...this.getActivity(activity.id), ...activity }
                 this.activityRegistry.set(activity.id, updatedActivity);
                 this.selectedActivity = updatedActivity;
-            })
+            });
         } catch (error) {
             console.log(error);
         }
     }
 
-    /**
-     * Deleting a specific activity from our list of activities (in db).
-     * @param id
-     */
     deleteActivity = async (id: string) => {
         this.loading = true;
         try {
             await agent.Activities.delete(id);
             runInAction(() => {
                 this.activityRegistry.delete(id);
-                this.loading = false;
-            })
+            });
         } catch (error) {
             console.log(error);
+        } finally {
             runInAction(() => {
                 this.loading = false;
-            })
+            });
         }
     }
 
-    /**
-     * Update attendance for a specific activity.
-     * */
     updateAttendance = async () => {
         const user = store.userStore.user;
         this.loading = true;
@@ -187,13 +157,30 @@ export default class ActivityStore {
                     this.selectedActivity!.isGoing = true;
                 }
                 this.activityRegistry.set(this.selectedActivity!.id, this.selectedActivity!);
-            })
+            });
         } catch (error) {
             console.log(error);
         } finally {
             runInAction(() => {
                 this.loading = false;
-            })
+            });
+        }
+    }
+
+    cancelActivityToggle = async () => {
+        this.loading = true;
+        try {
+            await agent.Activities.attend(this.selectedActivity!.id);
+            runInAction(() => {
+                this.selectedActivity!.isCancelled = !this.selectedActivity?.isCancelled;
+                this.activityRegistry.set(this.selectedActivity!.id, this.selectedActivity!);
+            });
+        } catch (error) {
+            console.log(error);
+        } finally {
+            runInAction(() => {
+                this.loading = false;
+            });
         }
     }
 }
