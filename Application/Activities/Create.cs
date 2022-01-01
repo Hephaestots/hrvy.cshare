@@ -6,7 +6,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistance.Data;
-
+        
 namespace Application.Activities
 {
     public class Create

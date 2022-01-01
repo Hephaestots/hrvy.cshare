@@ -17,13 +17,19 @@ namespace Application.Core
                     .MapFrom(s => s.Attendees
                         .FirstOrDefault(x => x.IsHost).User.UserName));
 
-            CreateMap<ActivityAttendee, Profiles.Profile>()
+            CreateMap<ActivityAttendee, AttendeeDto>()
                 .ForMember(d => d.DisplayName, o => o
                     .MapFrom(s => s.User.DisplayName))
                 .ForMember(d => d.Username, o => o
                     .MapFrom(s => s.User.UserName))
                 .ForMember(d => d.Bio, o => o
-                    .MapFrom(s => s.User.Bio));
+                    .MapFrom(s => s.User.Bio))
+                .ForMember(d => d.Image, o => o
+                    .MapFrom(s => s.User.Photos.FirstOrDefault(p => p.IsMain).Url));
+
+            CreateMap<User, Profiles.Profile>()
+                .ForMember(d => d.Image, o => o
+                    .MapFrom(s => s.Photos.FirstOrDefault(p => p.IsMain).Url));
         }
     }
 }
