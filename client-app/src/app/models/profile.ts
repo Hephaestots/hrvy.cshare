@@ -1,8 +1,11 @@
+import Photo from './photo';
+
 export default interface Profile {
     displayName: string;
     username: string;
     bio?: string;
     image?: string;
+    photos?: Photo[]
 }
 
 const emptyProfile = (): Profile => ({

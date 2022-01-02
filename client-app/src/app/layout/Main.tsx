@@ -6,6 +6,7 @@ import ActivityForm from '../../features/activities/form/ActivityForm';
 import ServerError from '../../features/errors/ServerError';
 import TestErrors from '../../features/errors/TestErrors';
 import LoginForm from '../../features/users/LoginForm';
+import ProfilePage from '../../features/profiles/ProfilePage';
 import NavBar from './NavBar';
 import { observer } from 'mobx-react-lite';
 import { Routes, Route } from 'react-router-dom';
@@ -25,6 +26,7 @@ export default observer(function Main() {
                     <Route path="/activities/:id" element={<ActivityDetails />} />
                     <Route path="/createActivity" element={<ActivityForm />} />
                     <Route path="/manage/:id" element={<ActivityForm />} />
+                    <Route path="/profiles/:username" element={<ProfilePage />} />
                     <Route path="/errors" element={<TestErrors />} />
                     <Route path="/server-error" element={<ServerError />} />
                     <Route path="/login" element={<LoginForm />} />

@@ -21,6 +21,7 @@ export default class UserStore {
             store.commonStore.setToken(user.token);
             runInAction(() => this.user = user);
             history.push('/activities');
+            store.activityStore.loadActivities();
             store.modalStore.closeModal();
         } catch (error) {
             throw error;
@@ -53,5 +54,9 @@ export default class UserStore {
         } catch (error) {
             console.log(error);
         }
+    }
+
+    setImage = (image: string) => {
+        if (this.user) this.user.image = image;
     }
 }
