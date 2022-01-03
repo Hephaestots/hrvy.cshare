@@ -40,7 +40,7 @@ namespace Application.Profiles
                     .ProjectTo<Profile>(_mapper.ConfigurationProvider)
                     .SingleOrDefaultAsync(u => u.Username == request.Username);
                 
-                return Result<Profile>.Success(user);
+                return Result<Profile>.Success(user!);
             }
         }
     }

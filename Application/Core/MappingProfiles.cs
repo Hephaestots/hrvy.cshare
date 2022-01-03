@@ -30,6 +30,12 @@ namespace Application.Core
             CreateMap<User, Profiles.Profile>()
                 .ForMember(d => d.Image, o => o
                     .MapFrom(s => s.Photos.FirstOrDefault(p => p.IsMain).Url));
+
+            /*CreateMap<Profiles.Profile, User>()
+                .ForMember(d => d.DisplayName, o => o
+                    .MapFrom(s => s.DisplayName))
+                .ForMember(d => d.Bio, o => o
+                    .MapFrom(s => s.Bio));*/
         }
     }
 }

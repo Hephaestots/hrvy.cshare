@@ -16,8 +16,7 @@
     <Folder Include="src\app\common\hooks\" />
     <Folder Include="src\app\common\imageUpload\" />
     <Folder Include="src\app\common\options\" />
-    <Folder Include="src\app\models\validation\" />
-    <Folder Include="src\features\profiles\" />
+    <Folder Include="src\features\profiles\form\" />
     <Folder Include="src\features\users\" />
   </ItemGroup>
   <!-- This target is copied from the ASP.NET SPA template in order to ensure node_modules are in place. -->

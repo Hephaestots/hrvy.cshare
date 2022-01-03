@@ -16,7 +16,7 @@ const emptyProfile = (): Profile => ({
 });
 
 export const newProfile = <T extends Partial<Profile>>(user: T): Profile => {
-    let subset = (({ displayName, username, image }) =>
-        ({ displayName, username, image }))(user as Profile);
+    let subset = (({ displayName, username, image, bio }) =>
+        ({ displayName, username, image, bio }))(user as Profile);
     return Object.assign(emptyProfile(), subset);
 }

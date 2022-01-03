@@ -46,10 +46,6 @@ body {
     width: auto !important;
 }
 
-.ui.cards > .card > .content, .ui.card > .content {
-    padding: unset;
-}
-
 .ui.buttons {
     display: block;
 }
