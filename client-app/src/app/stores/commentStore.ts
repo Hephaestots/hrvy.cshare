@@ -2,8 +2,6 @@ import { ActivityComment } from '../models/comment';
 import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 import { makeAutoObservable, runInAction } from 'mobx';
 import { store } from '../stores/store';
-import { parse } from 'date-fns';
-import format from 'date-fns/esm/format/index.js';
 
 export default class CommentStore {
     comments: ActivityComment[] = [];
