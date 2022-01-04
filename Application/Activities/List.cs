@@ -13,9 +13,12 @@ namespace Application.Activities
 {
     public class List
     {
-        public class Query : IRequest<Result<List<ActivityDto>>> {}
+        public class Query : IRequest<Result<PagedList<ActivityDto>>>
+        {
+            public PagingParams? Params { get; set; }
+        }
 
-        public class Handler : IRequestHandler<Query, Result<List<ActivityDto>>>
+        public class Handler : IRequestHandler<Query, Result<PagedList<ActivityDto>>>
         {
             private readonly DataContext _context;
             private readonly IMapper _mapper;
@@ -28,16 +31,23 @@ namespace Application.Activities
                 this._userAccessor = userAccessor;
             }
 
-            public async Task<Result<List<ActivityDto>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<PagedList<ActivityDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 Guard.Against.Null(_context.Activities, nameof(_context.Activities));
+                Guard.Against.Null(request.Params, nameof(request.Params));
 
-                var activities = await _context.Activities
+                var query = _context.Activities
+                    .OrderBy(a => a.Date)
                     .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider,
                                             new { currentUsername = _userAccessor.GetUsername() })
-                    .ToListAsync();
+                    .AsQueryable();
 
-                return Result<List<ActivityDto>>.Success(activities);
+                return Result<PagedList<ActivityDto>>.Success(
+                    await PagedList<ActivityDto>
+                    .CreateAsync(query, 
+                        request.Params.PageNumber, 
+                        request.Params.PageSize)    
+                );
             }
         }
     }
