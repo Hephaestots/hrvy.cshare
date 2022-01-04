@@ -47,7 +47,7 @@ body {
 }
 
 .ui.buttons {
-    display: block;
+    display:inline-flex;
 }
 
 .ui.card.hoverCard {

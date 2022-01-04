@@ -1,11 +1,10 @@
-import { observer } from 'mobx-react-lite'
-import React, { Fragment, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { Segment, Header, Comment, Loader, Divider } from 'semantic-ui-react'
+import { observer } from 'mobx-react-lite';
+import React, { Fragment, useEffect } from 'react';
 import { Formik, Form, Field, FieldProps } from 'formik';
-import { useStore } from '../../../app/stores/store'
+import { useStore } from '../../../app/stores/store';
+import CustomComment from '../../comments/Comment';
 import { CommentValidationSchema } from '../../../app/models/validation/commentValidationSchema';
-import { formatDistanceToNow } from 'date-fns';
+import { Comment, Divider, Header, Loader, Segment } from 'semantic-ui-react';
 
 interface Props {
     activityId: string;
@@ -33,9 +32,11 @@ export default observer(function ActivityDetailedChat({ activityId }: Props) {
                 color='teal'
                 style={{ border: 'none' }}
             >
-                <Header>Chat about this event</Header>
+                <Header as='h3' dividing>
+                    Comments
+                </Header>
             </Segment>
-            <Segment attached clearing>
+            <Segment attached='bottom' clearing>
                 <Formik
                     enableReinitialize
                     initialValues={{ body: '' }}
@@ -69,27 +70,16 @@ export default observer(function ActivityDetailedChat({ activityId }: Props) {
                         </Form>
                     )}
                 </Formik>
-                <Comment.Group>
+                <Fragment>
                     {(commentStore.comments.length > 0) &&
                         <Divider />
                     }
-                    {commentStore.comments.map((comment) => (
-                        <Comment key={comment.id}>
-                            <Comment.Avatar src={comment.image || '/assets/user.png'} />
-                            <Comment.Content>
-                                <Comment.Author as={Link} to={`/profiles/${comment.username}`}>
-                                    {comment.displayName}
-                                </Comment.Author>
-                                <Comment.Metadata>
-                                    <div>
-                                        {formatDistanceToNow(comment.createdAt)} ago
-                                    </div>
-                                </Comment.Metadata>
-                                <Comment.Text style={{whiteSpace: 'pre-wrap'}}>{comment.body}</Comment.Text>
-                            </Comment.Content>
-                        </Comment>
-                    ))}
-                </Comment.Group>
+                    <Comment.Group>
+                        {commentStore.comments.map((comment) => (
+                            <CustomComment key={comment.id} comment={comment} />
+                        ))}
+                    </Comment.Group>
+                </Fragment>
             </Segment>
         </Fragment>
     )

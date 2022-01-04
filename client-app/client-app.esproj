@@ -16,6 +16,7 @@
     <Folder Include="src\app\common\hooks\" />
     <Folder Include="src\app\common\imageUpload\" />
     <Folder Include="src\app\common\options\" />
+    <Folder Include="src\features\comments\" />
     <Folder Include="src\features\profiles\form\" />
     <Folder Include="src\features\users\" />
   </ItemGroup>
