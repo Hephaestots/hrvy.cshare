@@ -5,6 +5,8 @@ using PublicApi.Middleware;
 using PublicApi.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using PublicApi.SignalR;
+using Microsoft.AspNetCore.Builder;
 
 namespace API
 {
@@ -61,6 +63,7 @@ namespace API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<CommentHub>("/hubs/comments");
             });
         }
     }
