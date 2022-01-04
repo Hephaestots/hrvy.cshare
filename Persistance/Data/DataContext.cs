@@ -32,6 +32,20 @@ namespace Persistance.Data
                 .HasOne(a => a.Activity)
                 .WithMany(c => c.Comments)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<UserFollowing>(x => {
+                x.HasKey(uf => new { uf.ObserverId, uf.TargetId });
+
+                x.HasOne(u => u.Observer)
+                .WithMany(u => u.Followings)
+                .HasForeignKey(uf => uf.ObserverId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+                x.HasOne(u => u.Target)
+                .WithMany(u => u.Followers)
+                .HasForeignKey(uf => uf.TargetId)
+                .OnDelete(DeleteBehavior.Cascade);
+            });
         }
 
         public DbSet<Activity>? Activities { get; set; }
@@ -39,6 +53,8 @@ namespace Persistance.Data
         public DbSet<ActivityAttendee>? ActivityAttendees { get; set; }
 
         public DbSet<Comment>? Comments { get; set; }
+
+        public DbSet<UserFollowing>? UserFollowings { get; set; }
 
         public DbSet<Photo>? Photos { get; set;}
     }
