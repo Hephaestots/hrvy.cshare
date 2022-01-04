@@ -1,18 +1,22 @@
 import Photo from './photo';
 
 export default interface Profile {
-    displayName: string;
-    username: string;
     bio?: string;
+    displayName: string;
+    followersCount: number;
+    following: boolean;
+    followingCount: number;
     image?: string;
-    photos?: Photo[]
+    photos?: Photo[];
+    username: string;
 }
 
 const emptyProfile = (): Profile => ({
     displayName: '',
-    username: '',
-    image: '',
-    bio: ''
+    followersCount: 0,
+    following: false,
+    followingCount: 0,
+    username: ''
 });
 
 export const newProfile = <T extends Partial<Profile>>(user: T): Profile => {

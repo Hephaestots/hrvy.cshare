@@ -44,7 +44,8 @@ export default observer(function ActivityDetailedChat({ activityId }: Props) {
                     validationSchema={CommentValidationSchema}
                 >
                     {({ isValid, isSubmitting, handleSubmit }) => (
-                        <Form className='ui form'>
+                        <Form
+                            className='ui form'>
                             <Field name='body'>
                                 {(props: FieldProps) => (
                                     <div style={{ position: 'relative' }}>
@@ -68,8 +69,10 @@ export default observer(function ActivityDetailedChat({ activityId }: Props) {
                         </Form>
                     )}
                 </Formik>
-                <Divider />
                 <Comment.Group>
+                    {(commentStore.comments.length > 0) &&
+                        <Divider />
+                    }
                     {commentStore.comments.map((comment) => (
                         <Comment key={comment.id}>
                             <Comment.Avatar src={comment.image || '/assets/user.png'} />

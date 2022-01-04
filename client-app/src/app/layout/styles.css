@@ -50,3 +50,13 @@ body {
     display: block;
 }
 
+.ui.card.hoverCard {
+    max-width: 10%;
+}
+
+.ui.card.hoverDesc {
+    max-height: 1em;
+    max-width: 10%;
+    word-wrap: break-word;
+}
+

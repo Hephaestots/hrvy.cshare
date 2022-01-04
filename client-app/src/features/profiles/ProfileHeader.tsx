@@ -21,10 +21,10 @@ export default observer(function ProfileHeader({ profile }: Props) {
                         </Item>
                     </Item.Group>
                 </Grid.Column>
-                <Grid.Column width={4}>
+                <Grid.Column width={4} textAlign='right'>
                     <Statistic.Group>
-                        <Statistic label='Followers' value='5' />
-                        <Statistic label='Following' value='34' />
+                        <Statistic label='Followers' value={profile.followersCount} />
+                        <Statistic label='Following' value={profile.followingCount} />
                     </Statistic.Group>
                     <Divider />
                     <Reveal animated='move'>
@@ -35,8 +35,8 @@ export default observer(function ProfileHeader({ profile }: Props) {
                             <Button
                                 basic
                                 fluid
-                                color={true ? 'red' : 'green'}
-                                content={true ? 'Unfollow' : 'Follow'} />
+                                color={profile.following ? 'red' : 'green'}
+                                content={profile.following ? 'Unfollow' : 'Follow'} />
                         </Reveal.Content>
                     </Reveal>
                 </Grid.Column>

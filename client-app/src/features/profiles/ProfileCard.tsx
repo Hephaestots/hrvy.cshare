@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import Profile from '../../app/models/profile';
-import { Card, Icon, Image } from 'semantic-ui-react';
+import { Card, Divider, Icon, Image } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 interface Props {
@@ -12,19 +12,22 @@ export default observer(function ProfileCard({ profile }: Props) {
 
     function truncate(str: string | undefined) {
         if (str)
-            return ((str.length > 100) ? str.substring(0, 97) + '...' : str);
+            return ((str.length > 65) ? str.substring(0, 62) + '...' : str);
     }
 
-    return (
-        <Card as={Link} to={`/profiles/${profile.username}`}>
-            <Image src={profile.image || '/assets/user.png'} />
-            <Card.Content>
+    return ( 
+        <Card extra as={Link} to={`/profiles/${profile.username}`}>
+            <Card.Content className='hoverCard'>
+                <Image size='small' src={profile.image || '/assets/user.png'} />
+                <Divider fitted hidden />
                 <Card.Header content={profile.displayName} />
-                <Card.Description content={truncate(profile.bio) || 'Bio goes here...'} />
+                {profile.following && <span style={{ color: 'darkseagreen', fontSize: '0.75em' }}>Following</span>}
+                <Divider fitted />
+                <Card.Description className='hoverDesc' content={truncate(profile.bio) || 'Bio goes here...'} />
             </Card.Content>
             <Card.Content extra>
                 <Icon name='user' />
-                20 followers!
+                {profile.followersCount}
             </Card.Content>
         </Card>
     );
