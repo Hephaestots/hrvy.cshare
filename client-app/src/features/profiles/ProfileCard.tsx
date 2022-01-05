@@ -20,7 +20,7 @@ export default observer(function ProfileCard({ activeTab, profile }: Props) {
     return (
         <Card
             style={(activeTab && (activeTab === 3 || activeTab === 4) && !profile.following)
-                ? { opacity: 0.5 } : null}
+                ? { opacity: 0.75 } : null}
             as={Link}
             to={`/profiles/${profile.username}`}>
             <Card.Content className='hoverCard'>

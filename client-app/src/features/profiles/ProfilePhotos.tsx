@@ -60,8 +60,8 @@ export default observer(function ProfilePhotos({ profile }: Props) {
                     ) : (
                         <Card.Group>
                             {profile.photos?.map((photo) => (
-                                <Card key={photo.id}>
-                                    <Card.Content style={{ padding: 'unset' }}>
+                                <Card key={photo.id} style={{ maxWidth: '18.2%' }}>
+                                    <Card.Content style={{ padding: 'unset'}}>
                                         <Image size='small' src={photo.url || '/assets/user.png'} />
                                         {isCurrentUser && (
                                             <Button.Group fluid widths={2}>
