@@ -32,7 +32,7 @@ export default observer(function ActivityDetailedChat({ activityId }: Props) {
                 color='teal'
                 style={{ border: 'none' }}
             >
-                <Header as='h3' dividing>
+                <Header as='h2' dividing>
                     Comments
                 </Header>
             </Segment>
@@ -72,7 +72,7 @@ export default observer(function ActivityDetailedChat({ activityId }: Props) {
                 </Formik>
                 <Fragment>
                     {(commentStore.comments.length > 0) &&
-                        <Divider />
+                        <Divider fitted />
                     }
                     <Comment.Group threaded>
                         {commentStore.comments.map((comment) => (
