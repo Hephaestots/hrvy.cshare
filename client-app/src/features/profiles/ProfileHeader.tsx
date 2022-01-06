@@ -16,7 +16,7 @@ export default observer(function ProfileHeader({ profile }: Props) {
                 <Grid.Column width={12}>
                     <Item.Group>
                         <Item style={{paddingTop: 10}}>
-                            <Item.Image avatar className='segment' size='small' src={profile.image || '/assets/user.png'} />
+                            <Item.Image avatar size='small' src={profile.image || '/assets/user.png'} />
                             <Item.Content verticalAlign='middle'>
                                 <Header as='h1'>{profile.displayName}
                                     <Header.Subheader>
@@ -28,7 +28,7 @@ export default observer(function ProfileHeader({ profile }: Props) {
                     </Item.Group>
                 </Grid.Column>
                 <Grid.Column width={4} textAlign='center'>
-                    <Statistic.Group style={{ paddingLeft: '1.55em' }}>
+                    <Statistic.Group>
                         <Statistic label='Followers' value={profile.followersCount} />
                         <Statistic label='Following' value={profile.followingCount} />
                     </Statistic.Group>

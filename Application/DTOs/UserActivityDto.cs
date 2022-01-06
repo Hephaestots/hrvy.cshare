@@ -8,6 +8,7 @@ namespace Application.DTOs
         public string? Title { get; set; }
         public string? Category { get; set; }
         public DateTime Date { get; set; }
+        public bool IsCancelled { get; set; }
 
         [JsonIgnore]
         public string? HostUsername { get; set; }

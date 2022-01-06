@@ -16,7 +16,7 @@ const emptyProfile = (): Profile => ({
     followersCount: 0,
     following: false,
     followingCount: 0,
-    username: ''
+    username: '',
 });
 
 export const newProfile = <T extends Partial<Profile>>(user: T): Profile => {

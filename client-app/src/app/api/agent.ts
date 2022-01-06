@@ -7,6 +7,7 @@ import { history } from '../layout/base/history';
 import { store } from '../stores/store';
 import Profile from '../models/profile';
 import Photo from '../models/photo';
+import UserActivity from '../models/userActivity';
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -104,9 +105,11 @@ const Account = {
 }
 
 const Profiles = {
-    get: (username: string) => requests.get<Profile>(`/profiles/${username}`),
     deletePhoto: (id: string) => requests.delete<void>(`/photos/${id}`),
     editProfile: (profile: Partial<Profile>) => requests.put<void>(`/profiles`, profile),
+    get: (username: string) => requests.get<Profile>(`/profiles/${username}`),
+    listFollowings: (username: string, predicate: string) => requests.get<Profile[]>(`/follow/${username}?predicate=${predicate}`),
+    listUserActivities: (username: string, predicate: string) => requests.get<UserActivity[]>(`/profiles/${username}/activities?predicate=${predicate}`),
     setMainPhoto: (id: string) => requests.post<void>(`/photos/${id}/setmain`, {}),
     uploadPhoto: (file: Blob) => {
         let formData = new FormData();
@@ -115,8 +118,7 @@ const Profiles = {
             headers: { 'Content-type': 'multipart/form-data' }
         });
     },
-    updateFollowing: (username: string) => requests.post<void>(`/follow/${username}`, {}),
-    listFollowings: (username: string, predicate: string) => requests.get<Profile[]>(`/follow/${username}?predicate=${predicate}`)
+    updateFollowing: (username: string) => requests.post<void>(`/follow/${username}`, {})
 }
 
 const agent = {

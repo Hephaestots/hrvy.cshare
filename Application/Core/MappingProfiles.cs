@@ -35,6 +35,20 @@ namespace Application.Core
                 .ForMember(d => d.Following, o => o
                     .MapFrom(s => s.User.Followers.Any(f => f.Observer.UserName == currentUsername)));
 
+            CreateMap<ActivityAttendee, UserActivityDto>()
+                .ForMember(d => d.Id, o => o
+                    .MapFrom(s => s.Activity.Id))
+                .ForMember(d => d.Title, o => o
+                    .MapFrom(s => s.Activity.Title))
+                .ForMember(d => d.Category, o => o
+                    .MapFrom(s => s.Activity.Category))
+                .ForMember(d => d.Date, o => o
+                    .MapFrom(s => s.Activity.Date))
+                .ForMember(d => d.IsCancelled, o => o
+                    .MapFrom(s => s.Activity.IsCancelled))
+                .ForMember(d => d.HostUsername, o => o
+                    .MapFrom(s => s.Activity.Attendees.FirstOrDefault(a => a.IsHost).User.UserName));
+
             CreateMap<User, Profiles.Profile>()
                 .ForMember(d => d.Image, o => o
                     .MapFrom(s => s.Photos.FirstOrDefault(p => p.IsMain).Url))

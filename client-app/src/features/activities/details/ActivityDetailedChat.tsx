@@ -74,7 +74,7 @@ export default observer(function ActivityDetailedChat({ activityId }: Props) {
                     {(commentStore.comments.length > 0) &&
                         <Divider />
                     }
-                    <Comment.Group>
+                    <Comment.Group threaded>
                         {commentStore.comments.map((comment) => (
                             <CustomComment key={comment.id} comment={comment} />
                         ))}
