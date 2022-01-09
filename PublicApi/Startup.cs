@@ -23,8 +23,10 @@ namespace API
         {
             services.AddControllers(opt =>
                     {
-                        var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser()
-                                                                     .Build();
+                        var policy = new AuthorizationPolicyBuilder()
+                            .RequireAuthenticatedUser()
+                            .Build();
+
                         opt.Filters.Add(new AuthorizeFilter(policy));
                     })
                     .AddFluentValidation(config =>
@@ -40,9 +42,10 @@ namespace API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            // Exception middleware.
+            /* Middleware */
             app.UseMiddleware<ExceptionMiddleware>();
-
+            
+            /* Security Headers */
             app.UseCsp(opt => opt
                 .BlockAllMixedContent()
                 .StyleSources(s => s.Self().CustomSources("https://fonts.googleapis.com"))
@@ -72,18 +75,20 @@ namespace API
             }
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
 
+            /* Packaged Webapp */
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
+            /* Policies */
             app.UseCors("CorsPolicy");
 
+            /* Authorization & Authentication */
             app.UseAuthentication();
-
             app.UseAuthorization();
 
+            /* Endpoints */
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
