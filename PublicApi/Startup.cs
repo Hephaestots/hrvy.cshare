@@ -43,10 +43,32 @@ namespace API
             // Exception middleware.
             app.UseMiddleware<ExceptionMiddleware>();
 
+            app.UseCspReportOnly(opt => opt
+                .BlockAllMixedContent()
+                .StyleSources(s => s.Self().CustomSources("https://fonts.googleapis.com"))
+                .FontSources(s => s.Self().CustomSources("https://fonts.gstatic.com", "data:"))
+                .FormActions(s => s.Self())
+                .FrameAncestors(s => s.Self())
+                .ImageSources(s => s.Self().CustomSources("https://res.cloudinary.com", "data:"))
+                .ScriptSources(s => s.Self())
+            );
+            app.UseReferrerPolicy(opt => opt.NoReferrer());
+            app.UseXContentTypeOptions();
+            app.UseXfo(opt => opt.Deny());
+            app.UseXXssProtection(opt => opt.EnabledWithBlockMode());
+
             if (env.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPIv5 v1"));
+            }
+            else
+            {
+                app.Use(async (context, next) =>
+                {
+                    context.Response.Headers.Add("Scrict-Transport-Security", "max-age=31536000");
+                    await next.Invoke();
+                });
             }
 
             app.UseHttpsRedirection();
