@@ -5,9 +5,9 @@
   2. React and TypeScript for the ClientApp.
   3. MobX for the Store Manager.
 
-### Upcoming features for _CSHARE_
+## Upcoming features for _CSHARE_
 
-**Groups**
+###Groups
 -------------
 > As a `user`, I want to be able to: 
 
@@ -15,7 +15,7 @@
 2. Invite other member to join my group.
 3. Modify the scope of my group. [Private, Public]
 
-**Structures**
+###Structures
 -------------
 > As a `user`, I want to be able to:
 
