@@ -23,8 +23,10 @@ namespace API
         {
             services.AddControllers(opt =>
                     {
-                        var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser()
-                                                                     .Build();
+                        var policy = new AuthorizationPolicyBuilder()
+                            .RequireAuthenticatedUser()
+                            .Build();
+
                         opt.Filters.Add(new AuthorizeFilter(policy));
                     })
                     .AddFluentValidation(config =>
@@ -40,28 +42,53 @@ namespace API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            // Exception middleware.
+            /* Middleware */
             app.UseMiddleware<ExceptionMiddleware>();
+            
+            /* Security Headers */
+            app.UseCsp(opt => opt
+                .BlockAllMixedContent()
+                .StyleSources(s => s.Self().CustomSources("https://fonts.googleapis.com"))
+                .FontSources(s => s.Self().CustomSources("https://fonts.gstatic.com", "data:"))
+                .FormActions(s => s.Self())
+                .FrameAncestors(s => s.Self())
+                .ImageSources(s => s.Self().CustomSources("https://res.cloudinary.com", "data:"))
+                .ScriptSources(s => s.Self())
+            );
+            app.UseReferrerPolicy(opt => opt.NoReferrer());
+            app.UseXContentTypeOptions();
+            app.UseXfo(opt => opt.Deny());
+            app.UseXXssProtection(opt => opt.EnabledWithBlockMode());
 
             if (env.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPIv5 v1"));
             }
+            else
+            {
+                app.Use(async (context, next) =>
+                {
+                    context.Response.Headers.Add("Strict-Transport-Security", "max-age=31536000");
+                    await next.Invoke();
+                });
+            }
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
 
+            /* Packaged Webapp */
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
+            /* Policies */
             app.UseCors("CorsPolicy");
 
+            /* Authorization & Authentication */
             app.UseAuthentication();
-
             app.UseAuthorization();
 
+            /* Endpoints */
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

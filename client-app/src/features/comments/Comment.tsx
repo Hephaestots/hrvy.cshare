@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { observer } from 'mobx-react-lite';
 import { ActivityComment } from '../../app/models/comment';
-import { Comment, Divider } from 'semantic-ui-react';
+import { Comment } from 'semantic-ui-react';
 import { formatDistanceToNow } from 'date-fns';
 import { Link } from 'react-router-dom';
 
@@ -26,7 +26,6 @@ export default observer(function CustomComment({ comment }: Props) {
                     </Comment.Text>
                     <Comment.Actions>
                         <Comment.Text as='a' content='Reply' />
-                        <Divider />
                     </Comment.Actions>
                 </Comment.Content>
             </Comment>

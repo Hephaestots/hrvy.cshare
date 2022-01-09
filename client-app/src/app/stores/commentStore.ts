@@ -29,7 +29,7 @@ export default class CommentStore {
                 runInAction(() => {
                     this.comments = comments;
                     this.comments.forEach(comment => {
-                        comment.createdAt = new Date(comment.createdAt + 'Z');
+                        comment.createdAt = new Date(comment.createdAt);
                     });
                 })
             });
