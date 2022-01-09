@@ -43,7 +43,7 @@ namespace API
             // Exception middleware.
             app.UseMiddleware<ExceptionMiddleware>();
 
-            app.UseCspReportOnly(opt => opt
+            app.UseCsp(opt => opt
                 .BlockAllMixedContent()
                 .StyleSources(s => s.Self().CustomSources("https://fonts.googleapis.com"))
                 .FontSources(s => s.Self().CustomSources("https://fonts.gstatic.com", "data:"))
