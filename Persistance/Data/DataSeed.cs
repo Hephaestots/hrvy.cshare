@@ -29,7 +29,7 @@ namespace Persistance.Data
                     new Activity
                     {
                         Title = "Past Activity 1",
-                        Date = DateTime.Now.AddMonths(-2),
+                        Date = DateTime.Now.AddMonths(-2).ToUniversalTime(),
                         Description = "Activity 2 months ago",
                         Category = "drinks",
                         City = "London",
@@ -46,7 +46,7 @@ namespace Persistance.Data
                     new Activity
                     {
                         Title = "Past Activity 2",
-                        Date = DateTime.Now.AddMonths(-1),
+                        Date = DateTime.Now.AddMonths(-1).ToUniversalTime(),
                         Description = "Activity 1 month ago",
                         Category = "culture",
                         City = "Paris",
@@ -68,7 +68,7 @@ namespace Persistance.Data
                     new Activity
                     {
                         Title = "Future Activity 1",
-                        Date = DateTime.Now.AddMonths(1),
+                        Date = DateTime.Now.AddMonths(1).ToUniversalTime(),
                         Description = "Activity 1 month in future",
                         Category = "music",
                         City = "London",
@@ -90,7 +90,7 @@ namespace Persistance.Data
                     new Activity
                     {
                         Title = "Future Activity 2",
-                        Date = DateTime.Now.AddMonths(2),
+                        Date = DateTime.Now.AddMonths(2).ToUniversalTime(),
                         Description = "Activity 2 months in future",
                         Category = "food",
                         City = "London",
@@ -112,7 +112,7 @@ namespace Persistance.Data
                     new Activity
                     {
                         Title = "Future Activity 3",
-                        Date = DateTime.Now.AddMonths(3),
+                        Date = DateTime.Now.AddMonths(3).ToUniversalTime(),
                         Description = "Activity 3 months in future",
                         Category = "drinks",
                         City = "London",
@@ -134,7 +134,7 @@ namespace Persistance.Data
                     new Activity
                     {
                         Title = "Future Activity 4",
-                        Date = DateTime.Now.AddMonths(4),
+                        Date = DateTime.Now.AddMonths(4).ToUniversalTime(),
                         Description = "Activity 4 months in future",
                         Category = "culture",
                         City = "London",
@@ -151,7 +151,7 @@ namespace Persistance.Data
                     new Activity
                     {
                         Title = "Future Activity 5",
-                        Date = DateTime.Now.AddMonths(5),
+                        Date = DateTime.Now.AddMonths(5).ToUniversalTime(),
                         Description = "Activity 5 months in future",
                         Category = "drinks",
                         City = "London",
@@ -173,7 +173,7 @@ namespace Persistance.Data
                     new Activity
                     {
                         Title = "Future Activity 6",
-                        Date = DateTime.Now.AddMonths(6),
+                        Date = DateTime.Now.AddMonths(6).ToUniversalTime(),
                         Description = "Activity 6 months in future",
                         Category = "music",
                         City = "London",
@@ -195,7 +195,7 @@ namespace Persistance.Data
                     new Activity
                     {
                         Title = "Future Activity 7",
-                        Date = DateTime.Now.AddMonths(7),
+                        Date = DateTime.Now.AddMonths(7).ToUniversalTime(),
                         Description = "Activity 7 months in future",
                         Category = "travel",
                         City = "Berlin",
@@ -217,7 +217,7 @@ namespace Persistance.Data
                     new Activity
                     {
                         Title = "Future Activity 8",
-                        Date = DateTime.Now.AddMonths(8),
+                        Date = DateTime.Now.AddMonths(8).ToUniversalTime(),
                         Description = "Activity 8 months in future",
                         Category = "drinks",
                         City = "London",

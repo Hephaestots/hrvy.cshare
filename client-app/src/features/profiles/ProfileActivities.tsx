@@ -1,4 +1,4 @@
-import React, { Fragment, SyntheticEvent, useEffect } from 'react';
+import React, { SyntheticEvent, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Tab } from 'semantic-ui-react';
 
@@ -30,7 +30,6 @@ export default observer(function ProfileActivities() {
             menuPosition='left'
             panes={panes}
             onTabChange={(e, data) => handleTabChange(e, data)}
-        >
-        </Tab>
+        />
     );
 });

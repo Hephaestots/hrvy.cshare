@@ -6,7 +6,6 @@ using PublicApi.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using PublicApi.SignalR;
-using Microsoft.AspNetCore.Builder;
 
 namespace API
 {
@@ -54,6 +53,9 @@ namespace API
 
             app.UseRouting();
 
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+
             app.UseCors("CorsPolicy");
 
             app.UseAuthentication();
@@ -64,6 +66,7 @@ namespace API
             {
                 endpoints.MapControllers();
                 endpoints.MapHub<CommentHub>("/hubs/comments");
+                endpoints.MapFallbackToController("Index", "Fallback");
             });
         }
     }

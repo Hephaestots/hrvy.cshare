@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <PackageReference Include="CloudinaryDotNet" Version="1.15.2" />
+    <PackageReference Include="CloudinaryDotNet" Version="1.16.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="6.0.1" />
   </ItemGroup>
 

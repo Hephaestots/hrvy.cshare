@@ -1,7 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React, { Fragment, useEffect, useState } from 'react';
 import { Grid, Loader } from 'semantic-ui-react';
-import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { useStore } from '../../../app/stores/store';
 import ActivityList from '../dashboard/ActivityList';
 import ActivityFilters from '../dashboard/ActivityFilters';
