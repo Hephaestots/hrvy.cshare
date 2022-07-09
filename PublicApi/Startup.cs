@@ -48,12 +48,25 @@ namespace API
             /* Security Headers */
             app.UseCsp(opt => opt
                 .BlockAllMixedContent()
-                .StyleSources(s => s.Self().CustomSources("https://fonts.googleapis.com"))
+                .StyleSources(s => s.Self().CustomSources(
+                    "https://fonts.googleapis.com",
+                    "sha256-yR2gSI6BIICdRRE2IbNP1SJXeA5NYPbaM32i/Y8eS9o="
+                ))
                 .FontSources(s => s.Self().CustomSources("https://fonts.gstatic.com", "data:"))
                 .FormActions(s => s.Self())
                 .FrameAncestors(s => s.Self())
-                .ImageSources(s => s.Self().CustomSources("https://res.cloudinary.com", "data:"))
+                .ImageSources(s => s.Self().CustomSources(
+                    "https://res.cloudinary.com", 
+                    "https://www.facebook.com",
+                    "https://platform-lookaside.fbsbx.com",
+                    "data:"
+                ))
                 .ScriptSources(s => s.Self())
+                .ScriptSources(s => s.Self().CustomSources(
+                    "sha256-khMFfTbom33H77mXJRdiySRUVyGB4dpYESefs00gjH4=",
+                    "https://connect.facebook.net",
+                    "https://www.facebook.com"
+                ))
             );
             app.UseReferrerPolicy(opt => opt.NoReferrer());
             app.UseXContentTypeOptions();
