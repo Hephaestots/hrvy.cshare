@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Domain.Entities.Tokens;
+using Microsoft.AspNetCore.Identity;
 
 namespace Domain.Entities
 {
@@ -9,6 +10,7 @@ namespace Domain.Entities
 
         public ICollection<ActivityAttendee> Activities { get; set; } = new List<ActivityAttendee>();
         public ICollection<Photo> Photos { get; set; } = new List<Photo>();
+        public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
         public ICollection<UserFollowing> Followings { get; set; } = new List<UserFollowing>();
         public ICollection<UserFollowing> Followers { get; set; } = new List<UserFollowing>();
     }
